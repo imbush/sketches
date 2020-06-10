@@ -1,10 +1,11 @@
-let width = 1300; //1300 * n
-let height = 1200; //1200 * n
-let unitWidth = 1.3;
+let width = 500; //1300 * n
+let height = 500; //1200 * n
+let unitWidth = 2;
 let scale = width / 2 / unitWidth; //pixels to unit
-let maxIter = 2;
+let maxIter = 30;
+let power = 3;
 
-let centerRe = -0.709; //Natural number axis center
+let centerRe = 0; //Natural number axis center
 let centerIm = 0; //Imaginary number axis center
 
 function setup() {
@@ -12,6 +13,7 @@ function setup() {
     pixelDensity(1);
     d = pixelDensity();
     scale = scale * d; //accounts for scaling due to d
+    angleMode(RADIANS);
 
     pixelHeight = floor(height * d);
     pixelWidth = floor(width * d);
@@ -33,8 +35,8 @@ function escapeTime(a, b) {
     n = 0;
 
     while (zA * zA + zB * zB <= 4 && n < maxIter) {
-        tempzA = zA * zA - zB * zB + a;
-        zB = 2 * zA * zB + b;
+        tempzA = ((zA * zA + zB * zB) ** (power / 2)) * cos(power * atan2(zB, zA)) + a;
+        zB = ((zA * zA + zB * zB) ** (power / 2)) * sin(power * atan2(zB, zA)) + b;
         zA = tempzA;
         n++;
     }
@@ -70,6 +72,6 @@ function updateScreen() {
 }
 
 function mouseClicked() {
-    maxIter ++;
+    save("multibrot4.jpg");
     updateScreen();
 }
