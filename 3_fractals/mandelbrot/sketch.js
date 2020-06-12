@@ -1,11 +1,11 @@
-let width = 1300; //1300 * n
-let height = 1200; //1200 * n
-let unitWidth = 1.3;
+let width = 750; //1300 * n
+let height = 750; //1200 * n
+let unitWidth = 2;
 let scale = width / 2 / unitWidth; //pixels to unit
-let maxIter = 2;
+let maxIter = 500;
 
-let centerRe = -0.709; //Natural number axis center
-let centerIm = 0; //Imaginary number axis center
+let centerRe = -1.9409812588931057; //Natural number axis center
+let centerIm = 0.001056755085253147; //Imaginary number axis center
 
 function setup() {
     createCanvas(width, height);
@@ -31,7 +31,6 @@ function escapeTime(a, b) {
     zA = 0; //real part of iteration
     zB = 0; //imaginary part of iteration
     n = 0;
-
     while (zA * zA + zB * zB <= 4 && n < maxIter) {
         tempzA = zA * zA - zB * zB + a;
         zB = 2 * zA * zB + b;
@@ -69,7 +68,8 @@ function updateScreen() {
     updatePixels();
 }
 
-function mouseClicked() {
-    maxIter ++;
+function draw() {
+    scale *= 2; //zoom
+    // maxIter ++; //increase iterations
     updateScreen();
 }

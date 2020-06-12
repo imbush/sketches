@@ -1,9 +1,9 @@
-let width = 500; //1300 * n
-let height = 500; //1200 * n
+let width = 1000; //1300 * n
+let height = 1000; //1200 * n
 let unitWidth = 2;
 let scale = width / 2 / unitWidth; //pixels to unit
-let maxIter = 30;
-let power = 3;
+let maxIter = 100;
+let power = 0.5;
 
 let centerRe = 0; //Natural number axis center
 let centerIm = 0; //Imaginary number axis center
@@ -35,7 +35,7 @@ function escapeTime(a, b) {
     n = 0;
 
     while (zA * zA + zB * zB <= 4 && n < maxIter) {
-        tempzA = ((zA * zA + zB * zB) ** (power / 2)) * cos(power * atan2(zB, zA)) + a;
+        tempzA = ((zA * zA + zB * zB) ** (power / 2)) * cos(power * atan2(zB, zA)) + a; //De moivre's theorem
         zB = ((zA * zA + zB * zB) ** (power / 2)) * sin(power * atan2(zB, zA)) + b;
         zA = tempzA;
         n++;
@@ -72,6 +72,7 @@ function updateScreen() {
 }
 
 function mouseClicked() {
-    save("multibrot4.jpg");
+    // save("multibrot.jpg");
+    power += 0.5;
     updateScreen();
 }

@@ -13,7 +13,8 @@ function setup() {
 }
 
 function f(x) {
-    return x**4 - (mouseY - centerY)/radius
+    x -= (mouseX - centerX)/radius;
+    return x**2 - (mouseY - centerY)/radius;
 }
 
 function draw() {

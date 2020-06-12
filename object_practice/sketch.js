@@ -3,7 +3,7 @@ let width = 500;
 let border = 0;
 let numPts = 10;
 let speed = 0.5;
-
+let friction = 0.7;
 
 function setup() {
     createCanvas(height, width);
@@ -23,9 +23,10 @@ function setup() {
     }
 };
 
-let Particle = function(position, vect) {
+let Particle = function(position, vect, din) {
     this.position = position;
     this.vect = vect;
+    this.diameter = din
 }
 
 Particle.prototype.accelerate = function(newVect) {
@@ -42,8 +43,8 @@ Particle.prototype.display = function() {
     point(this.position[0], this.position[1])
 }
 
-Particle.prototype.bounce = function() {
-    
+Particle.prototype.bounce = function(surface) {
+    for 
 }
 
 function draw() {
