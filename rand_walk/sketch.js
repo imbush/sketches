@@ -1,6 +1,6 @@
 let height = 800;
 let width = 1280;
-let alpha = 10;
+let alpha = 1;
 
 function setup() {
     createCanvas(width, height);
@@ -8,16 +8,16 @@ function setup() {
     background(0);
     strokeWeight(1);
 
-    walkers = [];
-    for (let i = 0; i < 1000; i++) {
-        walkers[i] = new Walker([random(0, width), random(0, height)], [random(0, 255), random(0, 255), 0])
-    }
+    // walkers = [];
+    // for (let i = 0; i < 1000; i++) {
+    //     walkers[i] = new Walker([random(0, width), random(0, height)], [random(0, 255), random(0, 255), 0])
+    // }
 
-    // walkers = [
-    //     new Walker([width/2, height/2], [255, 0, 0]),
-    //     new Walker([width/2, height/2], [0, 255, 0]),
-    //     new Walker([width/2, height/2], [0, 0, 255])
-    // ];  
+    walkers = [
+        new Walker([width/2, height/2], [255, 0, 0]),
+        new Walker([width/2, height/2], [0, 255, 0]),
+        new Walker([width/2, height/2], [0, 0, 255])
+    ];  
 };
 
 let Walker = function(position, colors) {
@@ -38,7 +38,7 @@ Walker.prototype.display = function() {
 function draw() {
     for (let i = 0; i < walkers.length; i++) {
         let p = walkers[i]
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < 1000; j++) {
             console.log(p.position)
             p.display();
             p.move();
