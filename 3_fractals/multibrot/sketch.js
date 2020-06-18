@@ -3,7 +3,7 @@ let height = 1000; //1200 * n
 let unitWidth = 2;
 let scale = width / 2 / unitWidth; //pixels to unit
 let maxIter = 100;
-let power = 0.5;
+let power = 4;
 
 let centerRe = 0; //Natural number axis center
 let centerIm = 0; //Imaginary number axis center
@@ -71,8 +71,3 @@ function updateScreen() {
     updatePixels();
 }
 
-function mouseClicked() {
-    // save("multibrot.jpg");
-    power += 0.5;
-    updateScreen();
-}

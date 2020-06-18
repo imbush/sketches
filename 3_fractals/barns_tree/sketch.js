@@ -1,12 +1,16 @@
-let width = 750; //1300 * n
-let height = 750; //1200 * n
-let unitWidth = 2;
+let width = 500; //1300 * n
+let height = 500; //1200 * n
+let unitWidth = 4;
 let scale = width / 2 / unitWidth; //pixels to unit
-let maxIter = 1;
+let maxIter = 100;
 
-let centerRe = 0 //-1.9409812588931057; //Natural number axis center
-let centerIm = 0 //0.001056755085253147; //Imaginary number axis center
+let centerRe = 0; //Natural number axis center
+let centerIm = 0; //Imaginary number axis center
 
+let cA = - 0.6;
+let cB = 1.1;
+
+let k = 4;
 function setup() {
     createCanvas(width, height);
     pixelDensity(1);
@@ -28,12 +32,13 @@ function hueToRGB(H) {
 }
 
 function escapeTime(a, b) {
-    zA = 0; //real part of iteration
-    zB = 0; //imaginary part of iteration
+    zA = a; //real part of iteration
+    zB = b; //imaginary part of iteration
     n = 0;
-    while (zA * zA + zB * zB <= 4 && n < maxIter) {
-        tempzA = zA * zA - zB * zB + a;
-        zB = 2 * zA * zB + b;
+    while (zA * zA + zB * zB <= k && n < maxIter) {
+        (zA == 0) ? signRe = 0 : signRe = zA / abs(zA); //Sign of real part of z
+        tempzA = cA * (zA - signRe) - cB * zB;
+        zB = cB * (zA - signRe) + cA * zB
         zA = tempzA;
         n++;
     }
@@ -51,25 +56,18 @@ function updateScreen() {
 
             n = escapeTime(Re, Im);
 
-            if (n == maxIter) {
-                pixels[pixelIndex] = 0;
-                pixels[pixelIndex + 1] = 0;
-                pixels[pixelIndex + 2] = 0;
-                pixels[pixelIndex + 3] = 255;
-            } else {
-                pixColor = hueToRGB(n / maxIter);
-                pixels[pixelIndex] = pixColor[0];
-                pixels[pixelIndex + 1] = pixColor[1];
-                pixels[pixelIndex + 2] = pixColor[2];
-                pixels[pixelIndex + 3] = 255;
-            }
+            pixColor = hueToRGB(n ** 2 / 50 ** 2);
+            pixels[pixelIndex] = pixColor[0];
+            pixels[pixelIndex + 1] = pixColor[1];
+            pixels[pixelIndex + 2] = pixColor[2];
+            pixels[pixelIndex + 3] = 255;
+            
         }
     }
     updatePixels();
-}
+};
 
 function mouseClicked() {
-    //scale *= 2; //zoom
-    maxIter ++; //increase iterations
+    k ++;
     updateScreen();
 }
