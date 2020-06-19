@@ -11,7 +11,7 @@ function setup() {
     strokeWeight(5);
     colorMode(HSL, 360);
 
-    for(let i = 0; i < n; i ++) {
+    for (let i = 0; i < n; i ++) {
         mice.push([random(0, width), random(0, height)]);
         newMice.push([null, null])
     }
