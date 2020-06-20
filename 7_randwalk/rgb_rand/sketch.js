@@ -1,5 +1,5 @@
-let height = 800;
-let width = 1280;
+let height = 1000;
+let width = 1000;
 let alpha = 1;
 
 function setup() {

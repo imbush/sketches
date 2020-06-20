@@ -1,14 +1,14 @@
-let height = 500;
-let width = 500;
+let height = 4000;
+let width = 4000;
 let border = 0;
-let numPts = 10;
+let numPts = 50;
+let alpha = 250;
+let radius = 2 * height / 5;
 
 function setup() {
     createCanvas(height, width);
     angleMode(DEGREES);
-    background(0);
-    stroke(255);
-    strokeWeight(5);
+    mouseClicked();
 }
 
 function leftMost(points) { 
@@ -21,7 +21,6 @@ function leftMost(points) {
             leftest = points[i][0];
         }
     }
-    point(points[index][0], points[index][1])
     return index;
 }
 
@@ -50,22 +49,46 @@ function jarvis(s) {
 }
 
 function mouseClicked() {
-    background(0);
-    stroke('WHITE');
-    strokeWeight(5);
+    push();
+    background(220, 200, 200);
+    translate(width / 2, height / 2);
 
     var points = []
     for (let i = 0; i < numPts; i++) {
-        x = random(border, width - border)
-        y = random(border, height - border)
-        points[i] = [x, y]
-        point(x, y)
+        x = random(- radius, radius);
+        y = (radius * radius - x * x) ** 0.5
+        y = max(-y, min(y, random(-radius, radius)));
+        points[i] = [x, y];
     }
-    stroke('red');
-    strokeWeight(2);
+    for (let i = 0; i < 50; i ++) {
+        points.push([radius * cos(i * 360 / 50), radius * sin(i * 360 / 50)]);
+    }
+
+    noStroke();
+    recurseHulls(points);
+    pop();
+    save("wrapping.jpg")
+}
+
+function recurseHulls(points) {
+    if (points.length < 3) {
+        return;
+    }
+    fill(random(80, 180), random(60, 100), 100, alpha)
     const hull = jarvis(points);
-    for (let i = 0; i < hull.length - 1; i++) {
-        line(hull[i][0], hull[i][1], hull[i + 1][0], hull[i + 1][1])
+    beginShape();
+    for (let i = 0; i < hull.length; i++) {
+        vertex(hull[i][0], hull[i][1]);
     }
-    line(hull[hull.length-1][0], hull[hull.length-1][1], hull[0][0], hull[0][1])
+    endShape(CLOSE);
+
+    removed = random(hull);
+    for (let i = 0; i < points.length; i++) {
+        if (points[i] == removed) {
+            points.splice(i, 1);
+            break;
+        };
+    };
+    
+    recurseHulls(points);
 }
