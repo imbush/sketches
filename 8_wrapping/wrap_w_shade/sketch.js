@@ -14,7 +14,7 @@ function setup() {
 }
 
 function mouseClicked() {
-    background(0);
+    background(255);
     work = createGraphics(height, width);
     work.translate(width/2, height/2)
     work.noStroke();
@@ -30,9 +30,9 @@ function mouseClicked() {
         points.push([radius * cos(i * 360 / 50), radius * sin(i * 360 / 50)]);
     }
     recurseHulls(points);
-    work.stroke(0);
+    work.stroke(220, 200, 200);
     work.noFill();
-    work.strokeWeight(2);
+    work.strokeWeight(1);
     work.circle(0, 0, radius * 2);
 
     walkers = [];
@@ -134,4 +134,3 @@ Walker.prototype.display = function() {
     stroke(this.colors[0], this.colors[1], this.colors[2], shadeAlpha);
     point(this.position[0], this.position[1])
 }
-

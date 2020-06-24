@@ -1,5 +1,5 @@
-let height = 4000;
-let width = 4000;
+let height = 500;
+let width = 500;
 let border = 0;
 let numPts = 50;
 let alpha = 250;
@@ -67,7 +67,6 @@ function mouseClicked() {
     noStroke();
     recurseHulls(points);
     pop();
-    save("wrapping.jpg")
 }
 
 function recurseHulls(points) {
