@@ -10,10 +10,10 @@ function setup() {
 
     //image for path
     path = createGraphics(height, width)
-    path.strokeWeight(5);
+    path.strokeWeight(1);
     path.stroke('red')
 
-    ratioSlider = createSlider(-10, 10, 1, 0.2);
+    ratioSlider = createSlider(-10, 10, 1, PI);
     ratioSlider.position(10,70);
     lastRatio = ratioSlider.value();
 }
@@ -32,7 +32,7 @@ function draw() {
 
     background(100)
     text(ratioSlider.value(), ratioSlider.x * 2 + ratioSlider.width, 15)
-    //big Circle
+    //inner Circle
     radius = 100;
     centerX = 350;
     centerY = 350;
