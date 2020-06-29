@@ -24,6 +24,7 @@ function setup() {
     angleMode(DEGREES);
     noFill();
     textSize(20);
+    strokeWeight(2);
 }
 
 function reset() {
@@ -47,15 +48,17 @@ function draw() {
     }
     dots.point(radius + x, radius + y);
 
-    strokeWeight(2);
-    stroke(255);
-    noFill();
-    background(0);
+    fill(30);
+    noStroke();
+    background(200);
     circle(0, 0, 2*radius);
+
+    noFill();
+    stroke(100)
     rect(-radius, -radius, 2 * radius, 2 * radius);
     image(dots, -radius, -radius);
     
-    fill('white');
+    fill('black');
     strokeWeight(1)
     text(`Number of points in Circle : Total= ${circCount} : ${total} = ${round(circCount / total, 4)}; π ≈ ${round(4 * circCount / total, 4)}`, 50 - centerX, 30 - centerY)
 }

@@ -1,6 +1,6 @@
 // global variables below
 let inner, tileWidth, tileHeight;
-let tiles = 10; //tiles per side
+let tiles = 5; //tiles per side
 let width = 500;
 let height = 500;
 

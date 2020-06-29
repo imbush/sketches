@@ -1,60 +1,74 @@
 //Written by Inle Bush
-let height = 1000;
-let width = 1000;
-let path;
+let path, radIn;
+let speed = 0.1;//angle per update
+let ang = 0;
+let mode = 0;
 
 function setup() {
-    createCanvas(height, width);
+    createCanvas(1000, 1000);
     angleMode(DEGREES);
-    strokeWeight(2);
+    // strokeWeight(2);
+    radIn = width / 5;
 
     //image for path
-    path = createGraphics(height, width)
-    path.strokeWeight(1);
-    path.stroke('red')
+    path = createGraphics(width, height);
+    path.strokeWeight(2);
+    path.stroke(220, 30, 30);
 
-    ratioSlider = createSlider(-10, 10, 1, PI);
-    ratioSlider.position(10,70);
-    lastRatio = ratioSlider.value();
+    ratioSlider = createSlider(-10, 10, 0.01, PI);
+    ratio = PI;
+    // frameRate(60);
+    stroke(25)
+    strokeWeight(3);
+    fill(255);
+    noStroke();
+    mouseClicked();
 }
 
-let speed = 1;//angle per update
-let ang = 0;
-let ang2 = 0;
-let points = [];
+// function mouseClicked() {
+//     mode = (mode + 1) % 2;
+// }
 
-function draw() {
-    if (ratioSlider.value() != lastRatio) {
-        lastRatio = ratioSlider.value()
-        path.clear(); //resets path if ratio is changed
-    }
-
-
-    background(100)
-    text(ratioSlider.value(), ratioSlider.x * 2 + ratioSlider.width, 15)
-    //inner Circle
-    radius = 100;
-    centerX = 350;
-    centerY = 350;
-    circle(centerX, centerY, 2*radius);
+function mouseClicked() {
     
-    x = mouseX;
-    y = mouseY;
+    background(153);
+    // if (ratioSlider.value() != ratio) {
+    //     ratio = ratioSlider.value()
+    //     path.clear(); //resets path if ratio is changed
+    // }
     
-    if (ratioSlider.value() >= -1 && ratioSlider.value() <= 0) {
-        ratio = -1.1;
-    }   else {
-        ratio = ratioSlider.value(); // stationary radius/rotation radius
+    // if (ratioSlider.value() >= -1 && ratioSlider.value() <= 0) {
+    //     ratio = -1.1;
+    // }   else {
+    //     ratio = ratioSlider.value(); // ratio = (inner radius : outer radius)
+    // }
+    
+    for ( let i = 0; i < 500000; i++) {
+        radOut = radIn / ratio;
+        xCentOut = width / 2 + (radOut + radIn) * cos(ang);
+        yCentOut = height / 2 + (radOut + radIn) * sin(ang);
+
+        if (mode == 1){
+            circle(width/2, height/2, 2 * radIn);// inner Circle
+            circle(xCentOut, yCentOut, 2 * radOut);
+        }
+
+
+        line(width/2, height/2, xCentOut, yCentOut);
+        ptX = width / 2 + (radOut + radIn) * cos(ang) - radOut * cos((ratio + 1) * ang);
+        ptY = height / 2 + (radOut + radIn) * sin(ang) - radOut * sin((ratio + 1) * ang);
+        path.point(ptX, ptY);
+
+        line(xCentOut, yCentOut, ptX, ptY);
+        ang -= speed;
     }
+    image(path, 0, 0);
 
-    rotRad = radius/ratio;
-    rotCentX = centerX + (rotRad + radius) * cos(ang);
-    rotCentY = centerY + (rotRad + radius) * sin(ang);
-    ang -= speed;
-    circle(rotCentX, rotCentY, 2*rotRad)
-
-    ang2 -= speed * (ratio+1);
-    path.point(rotCentX + rotRad * cos(ang2), rotCentY + rotRad * sin(ang2))
-    image(path,0,0)
-    line(rotCentX, rotCentY, rotCentX + rotRad * cos(ang2), rotCentY + rotRad * sin(ang2))
+    noStroke();
+    fill(0);
+    textSize(width / 20);
+    text(`n = ${ratio}`, width / 50 , height * 3 / 50);
+    fill(255);
+    noStroke(0);
+    save("pi_epicycloid.jpg")
 }

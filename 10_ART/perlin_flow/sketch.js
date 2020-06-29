@@ -5,9 +5,6 @@ var increment = 0.01;
 
 function setup() {
     createCanvas(500, 500);
-    strokeWeight(1);
-    stroke(0);
-    noLoop();
 }
 
 function draw() {

@@ -1,8 +1,8 @@
 let height = 500;
 let width = 500;
 let border = 0;
-let numPts = 50;
-let alpha = 250;
+let numPts = 200;
+let alpha = 255;
 let radius = 2 * height / 5;
 
 function setup() {
@@ -67,6 +67,9 @@ function mouseClicked() {
     noStroke();
     recurseHulls(points);
     pop();
+
+    numPts ++;
+    console.log(numPts);
 }
 
 function recurseHulls(points) {
@@ -74,6 +77,7 @@ function recurseHulls(points) {
         return;
     }
     fill(random(80, 180), random(60, 100), 100, alpha)
+
     const hull = jarvis(points);
     beginShape();
     for (let i = 0; i < hull.length; i++) {

@@ -28,7 +28,6 @@ function mouseClicked() {
 function makeRect(centerX, centerY, n) {
     for (let i = 0; i < n; i++) {
         thisRadius = random(0, radius);
-        // stroke(0, random(80, 120), random(100, 255));
         fill(random(80, 180), random(60, 100), 100);
         beginShape();
         for (let angle = 0; angle < 360; angle += 60) {

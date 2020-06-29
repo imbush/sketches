@@ -6,11 +6,7 @@ let tileValues = [];
 
 function setup() {
     createCanvas(width, height);
-    stroke(255);
-    strokeWeight(3);
     noStroke();
-    background(0);
-    noFill();
     mouseClicked();
 }
 
@@ -28,7 +24,7 @@ function mouseClicked() {
 
 function draw() {
 
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
         changeX = floor(random(0, tileValues.length - 0.001));
         changeY = floor(random(0, tileValues[0].length - 0.001));
         if (changeX == 0 && changeY == 0) {//Doesn't change the coloring scheme
@@ -70,7 +66,6 @@ function draw() {
     //     circle(width/2, height/2, rad * 2)
     // }
     // noStroke();
-
 }
 
 function colorTiles() {
