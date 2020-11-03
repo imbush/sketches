@@ -1,2 +1,2 @@
 # sketches
-p5.js sketches
+A collection of p5.js sketches
