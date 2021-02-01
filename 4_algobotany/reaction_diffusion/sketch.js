@@ -1,8 +1,8 @@
 let pixelHeight, pixelWidth, conc, tempConc;
-let Da = 1.0;
-let Db = 0.5;
-let Dt = 100;    // Time Step
-let f = 0.0367;
+let Da = 0.01;
+let Db = 0.01;
+let Dt = 1;    // Time Step
+let f = 0.062;
 let k = 0.062;
 
 function setup() {
@@ -17,13 +17,15 @@ function setup() {
         conc[y] = [];
         tempConc[y] = [];
         for (let x = 0; x < pixelWidth + 2; x++) {
-            if ((pixelWidth / 2 - x) ** 2 + (pixelHeight / 2 - y) ** 2 < (pixelWidth + 2) / 4) {
-                conc[y][x] = [0, 1];
-                tempConc[y][x] = [0, 1];
-            } else {
-                conc[y][x] = [1, 0];
-                tempConc[y][x] = [1, 0];
-            }
+            // if ((pixelWidth / 2 - x) ** 2 + (pixelHeight / 2 - y) ** 2 < (pixelWidth + 2) / 4) {
+            //     conc[y][x] = [0, 1];
+            //     tempConc[y][x] = [0, 1];
+            // } else {
+            //     conc[y][x] = [1, 0];
+            //     tempConc[y][x] = [1, 0];
+            // }
+            conc[y][x] = [random(), random()];
+            tempConc[y][x] = [random(), random()];
         }
     }
     console.log(conc.length);
@@ -44,8 +46,6 @@ function draw() {
         }
     }
     updatePixels();
-    fill(0);
-    circle(mouseX, mouseY, 100);
 }
 
 function updateConcentration() {
@@ -54,18 +54,16 @@ function updateConcentration() {
         for (let y = 1; y < pixelHeight + 1; y++) {
             A = conc[y][x][0];
             B = conc[y][x][1];
-            // newA = A + (Da * laplacian(x, y, 0) - A * B ** 2 + f * (1 - A)) * Dt;
-            // newB = B + (Db * laplacian(x, y, 1) + A * B ** 2 - (k + f) * B) * Dt;
+            newA = A + (Da * laplacian(x, y, 0) - A * B ** 2 + f * (1 - A)) * Dt;
+            newB = B + (Db * laplacian(x, y, 1) + A * B ** 2 - (k + f) * B) * Dt;
 
-            // tempConc[y][x][0] = newA;
-            // tempConc[y][x][1] = newB;
-
-            tempConc[y][x][0] = 0.5 * A;
-            tempConc[y][x][1] = 0.5 * B;
+            tempConc[y][x][0] = newA;
+            tempConc[y][x][1] = newB;
         }
     }
-    swap(tempConc, conc);
-    console.log('finished')
+    temp = tempConc;
+    tempConc = conc;
+    conc = temp;
 }
 
 function laplacian(x, y, index) {
@@ -80,10 +78,4 @@ function laplacian(x, y, index) {
     value += 0.05 * conc[y - 1][x - 1][index];
 
     return value;
-}
-
-function swap(arr1, arr2) {
-    let temp = arr1;
-    arr1 = arr2;
-    arr2 = temp;
 }
